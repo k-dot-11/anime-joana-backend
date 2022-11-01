@@ -37,6 +37,10 @@ export {
     fetchSearchGogo
 } from './gogoanime/gogoanime.js';
 
+export {
+    fetchSearchZoro
+} from './zoro/zoro.js';
+
 
 // GLOBAL ROUTES
 

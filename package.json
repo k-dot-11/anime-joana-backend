@@ -1,6 +1,6 @@
 {
   "name": "anime-api",
-  "version": "1.11",
+  "version": "2.0-beta",
   "description": "A simple API to search, scrape popular and recent animes, streaming links and more.",
   "main": "index.js",
   "scripts": {
