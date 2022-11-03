@@ -38,7 +38,9 @@ export {
 } from './gogoanime/gogoanime.js';
 
 export {
-    fetchSearchZoro
+    fetchSearchZoro,
+    fetchZoroAnimeInfo,
+    fetchZoroEpisodeSource
 } from './zoro/zoro.js';
 
 

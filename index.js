@@ -17,7 +17,9 @@ import {
     fetchAnimixEpisodeInfo,
     fetchAnimixEpisodeSource,
     fetchGogoanimeEpisodeSource,
-    fetchSearchZoro
+    fetchSearchZoro,
+    fetchZoroAnimeInfo,
+    fetchZoroEpisodeSource
 } from './scraper/scrape.js';
 
 app.use(cors({ origin: "*", credentials: true }));
@@ -98,9 +100,15 @@ app.get('/animix/info/:malId', async (req, res) => {
     res.json(data).status(200)
 });
 
+app.get('/zoro/info/:zoroId', async (req, res) => {
+    const zoroId = req.params.zoroId;
+
+    const data = await fetchZoroAnimeInfo({ zoroId: zoroId });
+    res.json(data).status(200)
+})
+
 app.get([
-    '/animix/episodes/:animeId',
-    '/episodes/:animeId'
+    '/animix/episodes/:animeId'
 ], async (req, res) => {
     const animeId = req.params.animeId;
 
@@ -121,6 +129,13 @@ app.get('/gogoanime/watch/:episodeId', async (req, res) => {
     const data = await fetchGogoanimeEpisodeSource({ episodeId });
     res.json(data).status(200)
 });
+
+app.get('/zoro/watch/:episodeId', async (req, res) => {
+    const episodeId = req.params.episodeId;
+
+    const data = await fetchZoroEpisodeSource({ episodeId });
+    res.json(data).status(200);
+})
 
 //Start the web-server
 const PORT = process.env.PORT || 3000;
