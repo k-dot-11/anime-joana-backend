@@ -213,52 +213,33 @@ export const fetchAnimixEpisodeSource = async ({ episodeId }) => {
             episodeGogoLink = new URL("https:" + epList[episodeNum - 1]);
         };
 
-        const gogoServerRes = await axios.get(episodeGogoLink.href, headerOption);
-        const $$ = load(gogoServerRes.data);
+        let liveApiLink;
 
-        const params = await getAjaxParams($$, episodeGogoLink.searchParams.get('id'));
+        //Checking if the episode source link is already a Plyr link or not
+        if (episodeGogoLink.href.includes("player.html")) {
+            liveApiLink = episodeGogoLink.href;
+        } else {
+            const content_id = episodeGogoLink.searchParams.get("id");
+            liveApiLink = "https://animixplay.to/api/cW9" + encodeString(`${content_id}LTXs3GrU8we9O${encodeString(content_id)}`);
+        };
 
-        const fetchRes = await axios.get(`${episodeGogoLink.protocol}//${episodeGogoLink.hostname}/encrypt-ajax.php?${params}`, {
-            headers: {
-                "User-Agent": USER_AGENT,
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        });
+        const src = await decodeStreamingLinkAnimix(liveApiLink);
 
-        const finalSource = await decryptAjaxResponse(fetchRes.data);
-        if (!finalSource.source) return { error: "No sources found" };
-
-        finalSource.source.map(src => sources.push(src));
-        finalSource.source_bk.map(src => sources_bk.push(src));
-
-        // let liveApiLink;
-
-        // //Checking if the episode source link is already a Plyr link or not
-        // if (episodeGogoLink.href.includes("player.html")) {
-        //     liveApiLink = episodeGogoLink.href;
-        // } else {
-        //     const content_id = episodeGogoLink.searchParams.get("id");
-        //     liveApiLink = "https://animixplay.to/api/live" + encodeString(`${content_id}LTXs3GrU8we9O${encodeString(content_id)}`);
-        // };
-
-        // const src = await decodeStreamingLinkAnimix(liveApiLink);
-
-        // if (src.includes("player.html")) {
-        //     type = "plyr"
-        // } else if (src.includes(".m3u8")) {
-        //     type = "hls"
-        // } else if (src.includes(".mp4")) {
-        //     type = "mp4"
-        // };
+        if (src.includes("player.html")) {
+            type = "plyr"
+        } else if (src.includes(".m3u8")) {
+            type = "hls"
+        } else if (src.includes(".mp4")) {
+            type = "mp4"
+        };
 
         return {
             animeId,
             episodeNum,
-            sources,
-            sources_bk
+            sources: src
         }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         return {
             error: true,
             error_message: err
