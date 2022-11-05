@@ -106,12 +106,12 @@ export const fetchZoroEpisodeSource = async ({ episodeId }) => {
 
         episodeId = episodeId.split("-").pop()
 
-        const res = await axios.get(zoroBase + `/ajax/v2/episode/servers?episodeId=${episodeId}`);
+        const res = await axios.get(zoroBase + `/ajax/v2/episode/servers?episodeId=${episodeId}`, {
+            headers: headerOption
+        });
         const $ = load(res.data.html)
 
         let dataId;
-
-        console.log(res.data.html)
 
         $('div.servers-sub > div.ps__-list > div.server-item').each((i, el) => {
             if ($(el).attr("data-server-id") == 1) {
