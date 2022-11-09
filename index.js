@@ -19,7 +19,8 @@ import {
     fetchGogoanimeEpisodeSource,
     fetchSearchZoro,
     fetchZoroAnimeInfo,
-    fetchZoroEpisodeSource
+    fetchZoroEpisodeSource,
+    fetchSearchCrunchyroll
 } from './scraper/scrape.js';
 
 app.use(cors({ origin: "*", credentials: true }));
@@ -53,6 +54,13 @@ app.get('/zoro/search', async (req, res) => {
     const data = await fetchSearchZoro({ keyw: keyw, page: page });
     res.json(data).status(200);
 });
+
+app.get('/crunchyroll/search', async (req, res) => {
+    const keyw = req.query.keyw;
+
+    const data = await fetchSearchCrunchyroll({ keyw: keyw });
+    res.json(data).status(200)
+})
 
 app.get('/gogoanime/recent-episodes', async (req, res) => {
     const page = req.query.page;
