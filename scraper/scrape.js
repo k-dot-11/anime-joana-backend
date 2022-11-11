@@ -44,7 +44,9 @@ export {
 } from './zoro/zoro.js';
 
 export {
-    fetchSearchCrunchyroll
+    fetchSearchCrunchyroll,
+    fetchCrunchyrollEpisodes,
+    fetchCrunchyrollSources
 } from './crunchyroll/crunchyroll.js';
 
 // GLOBAL ROUTES

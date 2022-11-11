@@ -20,7 +20,9 @@ import {
     fetchSearchZoro,
     fetchZoroAnimeInfo,
     fetchZoroEpisodeSource,
-    fetchSearchCrunchyroll
+    fetchSearchCrunchyroll,
+    fetchCrunchyrollEpisodes,
+    fetchCrunchyrollSources
 } from './scraper/scrape.js';
 
 app.use(cors({ origin: "*", credentials: true }));
@@ -115,14 +117,19 @@ app.get('/zoro/info/:zoroId', async (req, res) => {
     res.json(data).status(200)
 })
 
-app.get([
-    '/animix/episodes/:animeId'
-], async (req, res) => {
+app.get('/animix/episodes/:animeId', async (req, res) => {
     const animeId = req.params.animeId;
 
     const data = await fetchAnimixEpisodeInfo({ animeId });
     res.json(data).status(200);
 });
+
+app.get('/crunchyroll/episodes/:id', async (req, res) => {
+    const id = req.params.id;
+
+    const data = await fetchCrunchyrollEpisodes({ id });
+    res.json(data).status(200)
+})
 
 app.get('/animix/watch/:episodeId', async (req, res) => {
     const episodeId = req.params.episodeId;
@@ -143,6 +150,13 @@ app.get('/zoro/watch/:episodeId', async (req, res) => {
 
     const data = await fetchZoroEpisodeSource({ episodeId });
     res.json(data).status(200);
+});
+
+app.get('/crunchyroll/watch/:episodeId', async (req, res) => {
+    const episodeId = req.params.episodeId;
+
+    const data = await fetchCrunchyrollSources({ episodeId });
+    res.json(data).status(200)
 })
 
 //Start the web-server
