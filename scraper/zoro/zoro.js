@@ -97,7 +97,7 @@ export const fetchZoroAnimeInfo = async ({ zoroId }) => {
     }
 }
 
-export const fetchZoroEpisodeSource = async ({ episodeId }) => {
+export const fetchZoroEpisodeSource = async ({ episodeId, type = 1 }) => {
     try {
         if (!episodeId) return {
             error: true,
@@ -111,9 +111,22 @@ export const fetchZoroEpisodeSource = async ({ episodeId }) => {
         });
         const $ = load(res.data.html)
 
-        let dataId;
+        console.log(res.data.html)
 
-        $('div.servers-sub > div.ps__-list > div.server-item').each((i, el) => {
+        let dataId;
+        let subOrDub = "sub";
+        if (type == 2) subOrDub = "dub"
+
+        console.log(subOrDub)
+
+        if (subOrDub === "dub" && $('div.servers-dub').length <= 0) {
+            return {
+                noDubs: true,
+                error_message: "No dubs available for this episode"
+            }
+        }
+
+        $(`div.servers-${subOrDub} > div.ps__-list > div.server-item`).each((i, el) => {
             if ($(el).attr("data-server-id") == 1) {
                 dataId = $(el).attr("data-id")
             };

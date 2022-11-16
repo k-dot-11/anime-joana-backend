@@ -24,8 +24,9 @@ router.get('/info/:zoroId', async (req, res) => {
 
 router.get('/watch/:episodeId', async (req, res) => {
     const episodeId = req.params.episodeId;
+    const type = req.query.type;
 
-    const data = await fetchZoroEpisodeSource({ episodeId });
+    const data = await fetchZoroEpisodeSource({ episodeId, type });
     res.json(data).status(200);
 });
 

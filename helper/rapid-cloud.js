@@ -18,7 +18,11 @@ export const scrapeSource = async (serverId) => {
     });
 
     const sources = rapidAjax.data.sources;
-    const decryptKey = await (await axios.get(decryptKeyLink)).data;
+    const decryptKey = await (await axios.get(decryptKeyLink, {
+        headers: {
+            "Cache-Control": "no-cache"
+        }
+    })).data;
 
     const source = CryptoJS.AES.decrypt(sources, decryptKey).toString(CryptoJS.enc.Utf8);
 
