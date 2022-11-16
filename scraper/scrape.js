@@ -111,7 +111,7 @@ export const fetchAnimeByGenre = async ({ list = [], genre }) => {
             genre = "CGDCT"
         } else {
             genre = firstLetterToUpperCase(genre);
-        }
+        };
 
         if (!GENRES.includes(genre)) {
             return {
