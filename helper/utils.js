@@ -41,3 +41,66 @@ export const firstLetterToUpperCase = (str) => {
     }
     return splitStr.join(' ');
 };
+
+export const range = ({ from = 0, to = 0, step = 1, length = Math.ceil((to - from) / step) }) =>
+    Array.from({ length }, (_, i) => from + i * step);
+
+export const cipher = (query, key) => {
+    let u = 0;
+    let v = 0;
+    const arr = range({ from: 0, to: 256 });
+
+    for (let i = 0; i < arr.length; i++) {
+        u = (u + arr[i] + key.charCodeAt(i % key.length)) % 256;
+        v = arr[i];
+        arr[i] = arr[u];
+        arr[u] = v;
+    }
+    u = 0;
+    let j = 0;
+
+    let res = '';
+    for (let i = 0; i < query.length; i++) {
+        j = (j + 1) % 256;
+        u = (u + arr[j]) % 256;
+        v = arr[j];
+        arr[j] = arr[u];
+        arr[u] = v;
+        res += String.fromCharCode(query.charCodeAt(i) ^ arr[(arr[j] + arr[u]) % 256]);
+    }
+    return res;
+};
+
+export const decrypt = (query) => {
+    const key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    const p = query?.replace(/[\t\n\f\r]/g, '')?.length % 4 === 0 ? query?.replace(/[==|?|$]/g, '') : query;
+
+    if (p?.length % 4 === 1 || /[^+/0-9A-Za-z]/gm.test(p)) throw new Error('Invalid character.');
+
+    let res = '';
+    let i = 0;
+    let e = 0;
+    let n = 0;
+    for (let j = 0; j < p?.length; j++) {
+        e = e << 6;
+        i = key.indexOf(p[j]);
+        e = e | i;
+        n += 6;
+
+        if (n === 24) {
+            res += String.fromCharCode((16711680 & e) >> 16);
+            res += String.fromCharCode((65280 & e) >> 8);
+            res += String.fromCharCode(255 & e);
+            n = 0;
+            e = 0;
+        }
+    }
+
+    if (12 === n) return res + String.fromCharCode(e >> 4);
+    else if (18 === n) {
+        e = e >> 2;
+        res += String.fromCharCode((65280 & e) >> 8);
+        res += String.fromCharCode(255 & e);
+    }
+    return res;
+}

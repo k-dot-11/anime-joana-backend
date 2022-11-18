@@ -49,6 +49,12 @@ export {
     fetchCrunchyrollSources
 } from './crunchyroll/crunchyroll.js';
 
+export {
+    fetchSearch9anime,
+    fetch9animeAnimeInfo,
+    // fetch9animeEpisodeSources
+} from './9anime/9anime.js';
+
 // GLOBAL ROUTES
 
 export const fetchPopular = async ({ list = [], type = 1 }) => {

@@ -16,17 +16,12 @@ import {
     decodeStreamingLinkAnimix
 } from '../../helper/utils.js';
 
-import {
-    getAjaxParams,
-    decryptAjaxResponse
-} from '../../helper/gogoanime.js';
-
 export const fetchSearchAnimix = async ({ list = [], keyw }) => {
     try {
         if (!keyw) return {
             error: true,
             error_message: "No keyword provided"
-        }
+        };
         const fetchAnimix = await axios.request({
             url: animixSearchApi2,
             method: 'POST',
