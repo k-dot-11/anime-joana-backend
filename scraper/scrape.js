@@ -52,7 +52,7 @@ export {
 export {
     fetchSearch9anime,
     fetch9animeAnimeInfo,
-    // fetch9animeEpisodeSources
+    fetch9animeEpisodeSources
 } from './9anime/9anime.js';
 
 // GLOBAL ROUTES

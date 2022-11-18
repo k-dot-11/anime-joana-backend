@@ -4,7 +4,7 @@ const router = express.Router();
 import {
     fetchSearch9anime,
     fetch9animeAnimeInfo,
-    // fetch9animeEpisodeSources
+    fetch9animeEpisodeSources
 } from '../scraper/scrape.js';
 
 router.get('/search', async (req, res) => {
@@ -21,11 +21,11 @@ router.get('/info/:animeId', async (req, res) => {
     res.json(data).status(200);
 });
 
-// router.get('/watch/:episodeId', async (req, res) => {
-//     const episodeId = req.params.episodeId;
+router.get('/watch/:episodeId', async (req, res) => {
+    const episodeId = req.params.episodeId;
 
-//     const data = await fetch9animeEpisodeSources({ episodeId });
-//     res.json(data).status(200)
-// })
+    const data = await fetch9animeEpisodeSources({ episodeId });
+    res.json(data).status(200)
+})
 
 export default router;

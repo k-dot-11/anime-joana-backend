@@ -45,7 +45,7 @@ export const firstLetterToUpperCase = (str) => {
 export const range = ({ from = 0, to = 0, step = 1, length = Math.ceil((to - from) / step) }) =>
     Array.from({ length }, (_, i) => from + i * step);
 
-export const cipher = (query, key) => {
+export const ciphered_key = (query, key) => {
     let u = 0;
     let v = 0;
     const arr = range({ from: 0, to: 256 });
@@ -71,7 +71,7 @@ export const cipher = (query, key) => {
     return res;
 };
 
-export const decrypt = (query) => {
+export const decrypt_url = (query) => {
     const key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
     const p = query?.replace(/[\t\n\f\r]/g, '')?.length % 4 === 0 ? query?.replace(/[==|?|$]/g, '') : query;
 

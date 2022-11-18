@@ -7,9 +7,13 @@ const decipherKey = "hlPeNwkncH0fq9so";
 
 //Importing functions from helper utils
 import {
-    cipher,
-    decrypt
+    ciphered_key,
+    decrypt_url
 } from '../../helper/utils.js';
+
+import {
+    extractFilemoon
+} from '../../helper/filemoon.js';
 
 export const fetchSearch9anime = async ({ keyw, list = [] }) => {
     try {
@@ -104,9 +108,6 @@ export const fetch9animeEpisodeSources = async ({ episodeId, list = [] }) => {
 
         let dataLinkId;
 
-
-        // NOT YET IMPLEMENTED
-
         $('div.servers > div.type > ul > li').each((i, el) => {
             if ($(el).text().toLowerCase() === "filemoon") {
                 dataLinkId = $(el).attr('data-link-id')
@@ -115,13 +116,14 @@ export const fetch9animeEpisodeSources = async ({ episodeId, list = [] }) => {
 
         const serverEmbedLinkAjax = await axios.get(`${nineanimeAjax}/server/${dataLinkId}`);
 
-        const embedLink = decodeURIComponent(cipher(decrypt(serverEmbedLinkAjax.data.result.url), decipherKey));
+        const embedLink = decodeURIComponent(ciphered_key(decrypt_url(serverEmbedLinkAjax.data.result.url), decipherKey));
+        const sourcesI = await extractFilemoon(embedLink);
 
-        // NOT YET IMPLEMENTED!!!!!
+        const sourceUrl = new URL(sourcesI);
 
-
-
-
+        return {
+            sources: sourceUrl.href
+        };
     } catch (err) {
         console.log(err)
         return {
