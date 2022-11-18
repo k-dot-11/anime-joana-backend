@@ -39,6 +39,8 @@ npm start
 
 You may test out these routes by going to [AnimeAPI demo](https://animeapi-demo.herokuapp.com/), but do note that this might be very slow and it is recommended to self host to get the fastest response time possible.
 
+**NOTE**: 9Anime routes *DO NOT* work on the above demo link. However it works just fine when hosted locally. It is highly recommended to self-host and run this project rather than using the demo link.
+
 ### AnimeAPI docs available at [this link](https://igrohan.gitbook.io/animeapi/)
 All routes and also installation instructions available here!
 
