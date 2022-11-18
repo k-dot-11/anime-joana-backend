@@ -6,14 +6,7 @@ const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 export const extractFilemoon = async (embedUrl) => {
     let sources;
 
-    const res = await axios.get(embedUrl, {
-        headers: {
-            Referer: embedUrl,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': USER_AGENT,
-            'X-Requested-With': "XMLHttpRequest"
-        }
-    });
+    const res = await axios.get(embedUrl);
     const $ = load(res.data);
 
     try {
