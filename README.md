@@ -10,7 +10,7 @@
       <img src="https://img.shields.io/github/license/IGRohan/AnimeAPI?style=flat-square" alt="Github license">
     </a>
      <a href="https://github.com/IGRohan/AnimeAPI">
-      <img src="https://img.shields.io/github/package-json/v/IGRohan/AnimeAPI?style=flat-square" alt="GitHub package.json version">
+      <img src="https://img.shields.io/github/package-json/v/IGRohan/AnimeAPI/main?style=flat-square" alt="GitHub package.json version">
     </a>
 </p>
 
