@@ -111,13 +111,13 @@ export const fetchZoroEpisodeSource = async ({ episodeId, type = 1 }) => {
         });
         const $ = load(res.data.html)
 
-        console.log(res.data.html)
+        // console.log(res.data.html)
 
         let dataId;
         let subOrDub = "sub";
         if (type == 2) subOrDub = "dub"
 
-        console.log(subOrDub)
+        // console.log(subOrDub)
 
         if (subOrDub === "dub" && $('div.servers-dub').length <= 0) {
             return {

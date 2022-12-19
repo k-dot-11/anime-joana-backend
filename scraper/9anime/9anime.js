@@ -22,8 +22,9 @@ export const fetchSearch9anime = async ({ keyw, list = [] }) => {
             error_message: "No keyword provided"
         };
 
-        const res = await axios.get(`${nineanimeAjax}/anime/search?keyword=${keyw}`);
-        const $ = load(res.data.result.html)
+        const res = await axios.get(`${nineanimeAjax}/anime/search?keyword=${encodeURIComponent(keyw)}`);
+
+        const $ = load(res.data.result.html);
 
         $('div.items > a.item').each((i, el) => {
             list.push({
@@ -37,6 +38,7 @@ export const fetchSearch9anime = async ({ keyw, list = [] }) => {
 
         return list;
     } catch (err) {
+        console.log(err)
         return {
             error: true,
             error_message: err
@@ -61,7 +63,8 @@ export const fetch9animeAnimeInfo = async ({ animeId, list = {} }) => {
 
         const id = $('#watch-main').attr('data-id');
 
-        const episodeListAjax = await axios.get(`${nineanimeAjax}/episode/list/${id}`);
+        const episodeListAjax = await axios.get(`${nineanimeAjax}/episode/list/${id}&vrf=${vrfGen(animeId)}`);
+        console.log(episodeListAjax.data)
         const $$ = load(episodeListAjax.data.result);
 
         let episodes = [];
@@ -132,5 +135,3 @@ export const fetch9animeEpisodeSources = async ({ episodeId, list = [] }) => {
         }
     }
 };
-
-

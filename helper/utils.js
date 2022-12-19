@@ -2,6 +2,10 @@ import axios from 'axios';
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36";
 const headerOption = { headers: { "User-Agent": USER_AGENT } };
 
+
+// from: https://raw.githubusercontent.com/AnimeJeff/Brohflow/main/keys.json
+export const cipher = "sUuzSWVbCkqDDrkz";
+
 export const decodeString = (string) => {
     return Buffer.from(string, 'base64').toString();
 }
@@ -44,6 +48,9 @@ export const firstLetterToUpperCase = (str) => {
 
 export const range = ({ from = 0, to = 0, step = 1, length = Math.ceil((to - from) / step) }) =>
     Array.from({ length }, (_, i) => from + i * step);
+
+
+// Functions used from consumet/consumet.ts and justfoolingaround/animdl.
 
 export const ciphered_key = (query, key) => {
     let u = 0;
@@ -103,4 +110,4 @@ export const decrypt_url = (query) => {
         res += String.fromCharCode(255 & e);
     }
     return res;
-}
+};
