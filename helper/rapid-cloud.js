@@ -1,5 +1,6 @@
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
+import { load } from 'cheerio';
 
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36";
 const headerOption = { "User-Agent": USER_AGENT, "X-Requested-With": "XMLHttpRequest" };
@@ -18,19 +19,13 @@ export const scrapeSource = async (serverId) => {
     });
 
     const sources = rapidAjax.data.sources;
-    console.log(sources)
-    // let decryptKey = await (await axios.get(decryptKeyLink, {
-    //     headers: {
-    //         "Cache-Control": "no-cache"
-    //     }
-    // })).data;
 
+    let decryptKey = await axios.get("https://github.com/consumet/rapidclown/blob/main/key.txt");
 
+    const $ = load(decryptKey.data);
 
-    const source = CryptoJS.AES.decrypt(sources, "7wfQgUNrRXCkGdxqEBvr5S").toString(CryptoJS.enc.Utf8);
-    console.log("///")
-    console.log(source)
-
+    const source = CryptoJS.AES.decrypt(sources, $('#LC1').text()).toString(CryptoJS.enc.Utf8);
+    //"7wfQgUNrRXCkGdxqEBvr5S"
     return {
         sources: JSON.parse(source),
         tracks: rapidAjax.data.tracks
