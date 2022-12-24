@@ -2,7 +2,7 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=AnimeAPI&fontSize=90&animation=fadeIn&fontAlignY=38&desc=anime%20streaming%20and%20discovery%20api&descAlignY=51&descAlign=62" align="center" style="width: 100%" />
 </div>  
   
-### <div align="center">AnimeAPI is a anime streaming and discovery api built using NodeJS and express that scrapes Gogoanime and Animixplay to return data</div>  
+### <div align="center">AnimeAPI is a anime streaming and discovery api built using NodeJS and express that scrapes Gogoanime and some other services to return data</div>  
 
 
 <p align="center">
@@ -36,6 +36,9 @@ npm start
 ```
 
 ## Available Routes
+
+> **IMPORTANT:**
+Animixplay has shut down, forever. The routes for animixplay will not be removed, however they do not work anymore.
 
 You may test out these routes by going to [AnimeAPI demo](https://animeapi-demo.herokuapp.com/), but do note that this might be very slow and it is recommended to self host to get the fastest response time possible.
 
