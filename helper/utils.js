@@ -1,25 +1,25 @@
-import axios from 'axios';
-const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36";
+import axios from "axios";
+const USER_AGENT =
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36";
 const headerOption = { headers: { "User-Agent": USER_AGENT } };
-
 
 // from: https://raw.githubusercontent.com/AnimeJeff/Brohflow/main/keys.json
 export const cipher = "sUuzSWVbCkqDDrkz";
 
 export const decodeString = (string) => {
-    return Buffer.from(string, 'base64').toString();
-}
+    return Buffer.from(string, "base64").toString();
+};
 
 export const encodeString = (string) => {
-    return Buffer.from(string).toString('base64');
+    return Buffer.from(string).toString("base64");
 };
 
 export const decodeStreamingLinkAnimix = async (animixLiveApiLink) => {
     let plyrLink;
 
-    const animixLiveApiRegex = new RegExp(/(aHR0[^#]+)/)
+    const animixLiveApiRegex = new RegExp(/(aHR0[^#]+)/);
     if (animixLiveApiLink.includes("player.html")) {
-        plyrLink = animixLiveApiLink
+        plyrLink = animixLiveApiLink;
     } else {
         const res = await axios.get(animixLiveApiLink, headerOption);
 
@@ -33,22 +33,27 @@ export const decodeStreamingLinkAnimix = async (animixLiveApiLink) => {
 
 export const firstLetterToUpperCase = (str) => {
     if (str.toLowerCase().includes("-")) {
-        var splitStr = str.toLowerCase().split('-');
+        var splitStr = str.toLowerCase().split("-");
         for (var i = 0; i < splitStr.length; i++) {
-            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-        };
-        return splitStr.join('-');
-    };
-    var splitStr = str.toLowerCase().split(' ');
-    for (var i = 0; i < splitStr.length; i++) {
-        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+            splitStr[i] =
+                splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+        }
+        return splitStr.join("-");
     }
-    return splitStr.join(' ');
+    var splitStr = str.toLowerCase().split(" ");
+    for (var i = 0; i < splitStr.length; i++) {
+        splitStr[i] =
+            splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    return splitStr.join(" ");
 };
 
-export const range = ({ from = 0, to = 0, step = 1, length = Math.ceil((to - from) / step) }) =>
-    Array.from({ length }, (_, i) => from + i * step);
-
+export const range = ({
+    from = 0,
+    to = 0,
+    step = 1,
+    length = Math.ceil((to - from) / step),
+}) => Array.from({ length }, (_, i) => from + i * step);
 
 // Functions used from consumet/consumet.ts and justfoolingaround/animdl.
 
@@ -66,29 +71,36 @@ export const ciphered_key = (query, key) => {
     u = 0;
     let j = 0;
 
-    let res = '';
+    let res = "";
     for (let i = 0; i < query.length; i++) {
         j = (j + 1) % 256;
         u = (u + arr[j]) % 256;
         v = arr[j];
         arr[j] = arr[u];
         arr[u] = v;
-        res += String.fromCharCode(query.charCodeAt(i) ^ arr[(arr[j] + arr[u]) % 256]);
+        res += String.fromCharCode(
+            query.charCodeAt(i) ^ arr[(arr[j] + arr[u]) % 256]
+        );
     }
     return res;
 };
 
 export const decrypt_url = (query) => {
-    const key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    const p = query?.replace(/[\t\n\f\r]/g, '')?.length % 4 === 0 ? query?.replace(/[==|?|$]/g, '') : query;
+    const key =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    const p =
+        query.replace(/[\t\n\f\r]/g, "").length % 4 === 0
+            ? query.replace(/[==|?|$]/g, "")
+            : query;
 
-    if (p?.length % 4 === 1 || /[^+/0-9A-Za-z]/gm.test(p)) throw new Error('Invalid character.');
+    if (p.length % 4 === 1 || /[^+/0-9A-Za-z]/gm.test(p))
+        throw new Error("Invalid character.");
 
-    let res = '';
+    let res = "";
     let i = 0;
     let e = 0;
     let n = 0;
-    for (let j = 0; j < p?.length; j++) {
+    for (let j = 0; j < p.length; j++) {
         e = e << 6;
         i = key.indexOf(p[j]);
         e = e | i;

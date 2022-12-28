@@ -13,7 +13,7 @@ export const scrapeSource = async (serverId) => {
     })
     const rapidLink = res.data.link;
 
-    const rapidId = rapidLink?.split("/").pop().split("?")[0];
+    const rapidId = rapidLink.split("/").pop().split("?")[0];
     const rapidAjax = await axios.get(`https://rapid-cloud.co/ajax/embed-6/getSources?id=${rapidId}`, {
         headers: headerOption
     });
